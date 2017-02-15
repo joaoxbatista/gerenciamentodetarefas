@@ -1,22 +1,48 @@
 package dao;
 import classes.ConnectionMysql;
 import classes.User;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.swing.JOptionPane;
+
 public class UserDao {
 	private ConnectionMysql connection = new ConnectionMysql();
 	
 	public UserDao(){
+		System.out.println("Dao do usuário criado com sucesso!");
 	}
 	
-	//Cadastrar Usuário
-	public void cadastrar(User usuario) throws Exception{
-		PreparedStatement query = "insert into ";
+	//Listagem de usuários
+	
+	public void listar() throws Exception{
+		String query = "select * from users";
+		Connection conn = this.connection.connect();
+		PreparedStatement ps = conn.prepareStatement(query);
+		ResultSet result = ps.executeQuery();
+		String usuarios[] = null;
+		while (result.next()){
+			System.out.println("Nome do Usuário = "+result.getString("name")+"\n E-mail = "+result.getString("email")+"\n");
+		}
+		
 	}
 	
-	//Editar Usuário
-	//Deletar Usuário
-	//Procurar Usuário
-	//Listar todos os Usuários
+	public void cadastrar(User user) throws Exception{
+		try {
+			String query = "insert into users(name, email) values(?, ?)";
+			Connection conn = this.connection.connect();
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, user.getName());
+			ps.setString(2, user.getEmail());
+			ps.execute();
+			JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
 	
 	
 }

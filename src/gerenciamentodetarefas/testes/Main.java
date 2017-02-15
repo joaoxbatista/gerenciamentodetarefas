@@ -1,15 +1,21 @@
 package gerenciamentodetarefas.testes;
 
 import classes.User;
-
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import classes.ConnectionMysql;
+import dao.UserDao;
 
 public class Main {
-	public static void main(String args[]) throws SQLException{
-		User user = new User("João Batista Gomes Silva", "jhonxbatista@gmail.com");
-		ConnectionMysql connection = new ConnectionMysql("tasks", "root", "g3d1te2016");
-		connection.connect();
+	public static void main(String args[]) throws Exception{
+		UserDao user = new UserDao();
+		user.listar();
+		
+		String name = JOptionPane.showInputDialog("Insira seu nome");
+		String email = JOptionPane.showInputDialog("Insira seu e-mail");
+		User jose = new User(name, email);
+		user.cadastrar(jose);
 	}
 }
