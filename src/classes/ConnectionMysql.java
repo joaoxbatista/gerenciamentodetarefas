@@ -6,6 +6,12 @@ public class ConnectionMysql {
 	private String user;
 	private String password;
 	
+	public ConnectionMysql(){
+		this.database = "tasks";
+		this.user = "root";
+		this.password = "g3d1te2016";
+	}
+	
 	public ConnectionMysql(String database, String user, String password){
 		this.database = database;
 		this.user = user;
